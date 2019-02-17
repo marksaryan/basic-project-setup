@@ -1,22 +1,24 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
-import { withNamespaces, WithNamespaces } from 'react-i18next';
-import i18n from '../../locales/i18n';
-import { pushAuthScreen } from 'AppNavigator';
+import { pushAuthScreen, pushTrackModalScreen } from 'AppNavigator';
+import { TrackList } from '../../components/Tracks/TrackList';
+import { connectData } from '../../redux';
 
-class TrackListScreen extends PureComponent<WithNamespaces> {
-  state = {
 
-  };
-
+class TrackListScreen extends PureComponent {
   render() {
+    console.log('New data', this.props);
     return (
       <View>
-        <Button title="Logout" onPress={() => pushAuthScreen()}/>
+        <Button title="Logout" onPress={() => pushAuthScreen()} />
         <Text>TrackList Page</Text>
+        <TrackList
+          tracks={this.props.data.tracks}
+        />
+        <Button title="Go to Modal" onPress={() => pushTrackModalScreen()} />
       </View>
     );
   }
 }
 
-export default withNamespaces()(TrackListScreen);
+export default connectData()(TrackListScreen);
